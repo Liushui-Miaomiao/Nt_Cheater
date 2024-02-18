@@ -46,6 +46,6 @@
 		/// <summary>
 		/// 不使用BOOM
 		/// </summary>
-		public const int NOUSE_BOOM = 0x4EECF;
+		public const int NOUSE_BOOM = 0x4EEC5;
 	}
 }

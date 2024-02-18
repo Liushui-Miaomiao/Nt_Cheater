@@ -95,6 +95,17 @@ namespace Nt_Cheater {
 		}
 
 		/// <summary>
+		/// 获取游戏基址真实地址
+		/// </summary>
+		/// <param name="lpBaseAddress">基址</param>
+		/// <returns>游戏基址真实地址</returns>
+		public int GetRealAddress(int lpBaseAddress) {
+			return baseAddr == IntPtr.Zero ?
+				0 : 
+				baseAddr.ToInt32() + lpBaseAddress;
+		}
+
+		/// <summary>
 		/// 写入内存
 		/// </summary>
 		/// <param name="lpBaseAddress">基址</param>
@@ -107,7 +118,7 @@ namespace Nt_Cheater {
 
 			_ = MyProcess.WriteProcessMemory(
 				_hProcess,
-				(IntPtr)(baseAddr.ToInt32() + lpBaseAddress),
+				(IntPtr)GetRealAddress(lpBaseAddress),
 				new int[] { lpBuffer },
 				nSize,
 				IntPtr.Zero
@@ -130,7 +141,7 @@ namespace Nt_Cheater {
 
 			_ = MyProcess.ReadProcessMemory(
 				_hProcess,
-				(IntPtr)(baseAddr.ToInt32() + lpBaseAddress),
+				(IntPtr)GetRealAddress(lpBaseAddress),
 				byteAddress,
 				nSize,
 				IntPtr.Zero
@@ -146,8 +157,7 @@ namespace Nt_Cheater {
 		/// <param name="lpBaseAddress">基址</param>
 		/// <param name="lpBuffer">写入数据组</param>
 		/// <param name="nSize">字节偏移组</param>
-		/// <param name="gapSize">间隔大小</param>
-		public void WriteMemoryArray(int lpBaseAddress, int[] lpBuffer, int[] nSize, int gapSize = 3) {
+		public void WriteMemoryArray(int lpBaseAddress, int[] lpBuffer, int[] nSize) {
 			if (_hProcess == IntPtr.Zero) {
 				return;
 			}
@@ -157,6 +167,9 @@ namespace Nt_Cheater {
 
 			int length = lpBuffer.Length;
 			for (int i = 0; i < length; i++) {
+				// 间隔的大小为上一写入的数据大小偏移量
+				int gapSize = i > 0 ? nSize[i - 1] : 0;
+
 				// 顺次写入内存
 				WriteMemory(
 					lpBaseAddress + i * gapSize,

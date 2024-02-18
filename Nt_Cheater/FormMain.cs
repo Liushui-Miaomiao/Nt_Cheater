@@ -8,7 +8,7 @@ namespace Nt_Cheater {
 		/// <summary>
 		/// 进程名
 		/// </summary>
-		private const string PROCESS_NAME = "Nightmare trip";
+		private const string PROCESS_NAME = "Nightmare_trip";
 
 		/// <summary>
 		/// 游戏实例
@@ -129,7 +129,7 @@ namespace Nt_Cheater {
 			_myGame.WriteMemory(MyAddress.SCORERATE, scoreRate);
 		}
 		/// <summary>
-		/// 按钮梦想力
+		/// 按钮_梦想力
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -176,24 +176,25 @@ namespace Nt_Cheater {
 		private void CheckboxDreampower_CheckedChanged(object sender, EventArgs e) {
 			CheckBox self = (CheckBox)sender;
 
-			if (self.Checked) {
-				// 目标代码：90 90 90 | 90 90 90 | 90 90 90 | 90 (00) (00)
-				// 逆序目标：90 90 90 | 90 90 90 | 90 90 90 | (00) (00) 90
-				_myGame.WriteMemoryArray(
-					MyAddress.NOUSE_DREAMPOWER,
-					new int[] { 0x909090, 0x909090, 0x909090, 0x000090 },
-					new int[] { 3, 3, 3, 1 }
-				);
+			// 梦想力真实地址
+			int dreamPowerRealAddr = _myGame.GetRealAddress(MyAddress.DREAMPOWER);
 
-				return;
+			// 源代码  ：C7 05 | ~~ ~~ ~~ ~~ | 00 00 | 00 00
+			// 逆序后  ：05 C7 | ~~ ~~ ~~ ~~ | 00 00 | 00 00
+			int[] lpBuffer = new int[] { 0x05C7, dreamPowerRealAddr, 0x0000, 0x0000 };
+			int[] nSize = new int[] { 2, 4, 2, 2 };
+
+			if (self.Checked) {
+				// 目标代码：90 90 | 90 90 | 90 90 | 90 90 | 90 90
+				// 逆序目标：90 90 | 90 90 | 90 90 | 90 90 | 90 90
+				lpBuffer = new int[] { 0x9090, 0x9090, 0x9090, 0x9090, 0x9090 };
+				nSize = new int[] { 2, 2, 2, 2, 2 };
 			}
 
-			// 源代码  ：C7 05 54 | 92 45 01 | 00 00 00 | 00 (00) (00)
-			// 逆序后  ：54 05 C7 | 01 45 92 | 00 00 00 | (00) (00) 00
 			_myGame.WriteMemoryArray(
 				MyAddress.NOUSE_DREAMPOWER,
-				new int[] { 0x5405C7, 0x014592, 0x000000, 0x000000 },
-				new int[] { 3, 3, 3, 1 }
+				lpBuffer,
+				nSize
 			);
 		}
 		/// <summary>
@@ -204,24 +205,25 @@ namespace Nt_Cheater {
 		private void CheckboxLife_CheckedChanged(object sender, EventArgs e) {
 			CheckBox self = (CheckBox)sender;
 
-			if (self.Checked) {
-				// 目标代码：90 90 90 | 90 90 90
-				// 逆序目标：90 90 90 | 90 90 90
-				_myGame.WriteMemoryArray(
-					MyAddress.NOUSE_LIFE,
-					new int[] { 0x909090, 0x909090 },
-					new int[] { 3, 3 }
-				);
+			// 残机真实内存地址
+			int lifeRealAddr = _myGame.GetRealAddress(MyAddress.LIFE);
 
-				return;
+			// 源代码  ：FF 0D | ~~ ~~ ~~ ~~ ~~
+			// 逆序后  ：0D FF | ~~ ~~ ~~ ~~ ~~
+			int[] lpBuffer = new int[] { 0x0DFF, lifeRealAddr };
+			int[] nSize = new int[] { 2, 4 };
+
+			if (self.Checked) {
+				// 目标代码：90 90 | 90 90 | 90 90
+				// 逆序目标：90 90 | 90 90 | 90 90
+				lpBuffer = new int[] { 0x9090, 0x9090, 0x9090 };
+				nSize = new int[] { 2, 2, 2 };
 			}
 
-			// 源代码  ：FF 0D 30 | 8D 45 01
-			// 逆序后  ：30 0D FF | 01 45 8D
 			_myGame.WriteMemoryArray(
 				MyAddress.NOUSE_LIFE,
-				new int[] { 0x300DFF, 0x01458D },
-				new int[] { 3, 3 }
+				lpBuffer,
+				nSize
 			);
 		}
 		/// <summary>
@@ -232,24 +234,17 @@ namespace Nt_Cheater {
 		private void CheckboxBoom_CheckedChanged(object sender, EventArgs e) {
 			CheckBox self = (CheckBox)sender;
 
-			if (self.Checked) {
-				// 目标代码：90 90 90 | 90 90 90
-				// 逆序目标：90 90 90 | 90 90 90
-				_myGame.WriteMemoryArray(
-					MyAddress.NOUSE_BOOM,
-					new int[] { 0x909090, 0x909090 },
-					new int[] { 3, 3 }
-				);
-
-				return;
-			}
-
-			// 源代码  ：89 35 38 | 8D 45 01
-			// 逆序后  ：38 35 89 | 01 45 8D
+			int[] lpBuffer =
+				self.Checked ?
+				// 目标代码：90
+				new int[] { 0x90 } :
+				// 源代码  ：4E
+				new int[] { 0x4E };
+			
 			_myGame.WriteMemoryArray(
 				MyAddress.NOUSE_BOOM,
-				new int[] { 0x383589, 0x01458D },
-				new int[] { 3, 3 }
+				lpBuffer,
+				new int[] { 1 }
 			);
 		}
 
