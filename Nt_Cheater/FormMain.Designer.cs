@@ -245,7 +245,7 @@ namespace Nt_Cheater
 			// 
 			// MyTimer
 			// 
-			this.MyTimer.Interval = 250;
+			this.MyTimer.Interval = 500;
 			this.MyTimer.Tick += new System.EventHandler(this.MyTimer_Tick);
 			// 
 			// FormMain

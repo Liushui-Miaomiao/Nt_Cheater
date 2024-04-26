@@ -13,8 +13,11 @@ namespace Nt_Cheater {
 		/// <summary>
 		/// 游戏实例
 		/// </summary>
-		private MyGame _myGame = new MyGame();
+		private readonly MyGame _myGame = new MyGame();
 
+		/// <summary>
+		/// 窗口主函数
+		/// </summary>
 		public FormMain() {
 			if (!MyUtils.IsAdministrator()) {
 				MessageBox.Show("没有以管理员身份启动，\n可能会造成修改进程失败！", "管理员权限", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -38,8 +41,8 @@ namespace Nt_Cheater {
 		/// <summary>
 		/// 主窗体加载后函数
 		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
+		/// <param name="sender">发送器</param>
+		/// <param name="e">事件参数</param>
 		private void Form1_Load(object sender, EventArgs e) {
 			ButtonRefindGame_Click(null, null);
 		}
@@ -47,8 +50,8 @@ namespace Nt_Cheater {
 		/// <summary>
 		/// 按钮_重新寻找游戏
 		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
+		/// <param name="sender">发送器</param>
+		/// <param name="e">事件参数</param>
 		private void ButtonRefindGame_Click(object sender, EventArgs e) {
 			MyUtils.FindProcess(PROCESS_NAME, CallBackFindProcessSuccess, CallBackFail);
 
@@ -104,8 +107,8 @@ namespace Nt_Cheater {
 		/// <summary>
 		/// 按钮_得分
 		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
+		/// <param name="sender">发送器</param>
+		/// <param name="e">事件参数</param>
 		private void ButtonScore_Click(object sender, EventArgs e) {
 			if (!int.TryParse(TextboxScore.Text, out int score)) {
 				score = 0;
@@ -116,8 +119,8 @@ namespace Nt_Cheater {
 		/// <summary>
 		/// 按钮_得分率
 		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
+		/// <param name="sender">发送器</param>
+		/// <param name="e">事件参数</param>
 		private void ButtonScorerate_Click(object sender, EventArgs e) {
 			if (!int.TryParse(TextboxScorerate.Text, out int scoreRate)) {
 				scoreRate = 0;
@@ -131,8 +134,8 @@ namespace Nt_Cheater {
 		/// <summary>
 		/// 按钮_梦想力
 		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
+		/// <param name="sender">发送器</param>
+		/// <param name="e">事件参数</param>
 		private void ButtonDreampower_Click(object sender, EventArgs e) {
 			if (!int.TryParse((string)ListboxDreampower.SelectedItem, out int dreamPower)) {
 				dreamPower = 0;
@@ -143,8 +146,8 @@ namespace Nt_Cheater {
 		/// <summary>
 		/// 按钮_残机
 		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
+		/// <param name="sender">发送器</param>
+		/// <param name="e">事件参数</param>
 		private void ButtonLife_Click(object sender, EventArgs e) {
 			if (!int.TryParse((string)ListboxLife.SelectedItem, out int life)) {
 				life = 1;
@@ -155,8 +158,8 @@ namespace Nt_Cheater {
 		/// <summary>
 		/// 按钮_BOOM
 		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
+		/// <param name="sender">发送器</param>
+		/// <param name="e">事件参数</param>
 		private void ButtonBoom_Click(object sender, EventArgs e) {
 			if (!int.TryParse((string)ListboxBoom.SelectedItem, out int boom)) {
 				boom = 1;
@@ -171,8 +174,8 @@ namespace Nt_Cheater {
 		/// <summary>
 		/// 复选框_不消耗梦想力
 		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
+		/// <param name="sender">发送器</param>
+		/// <param name="e">事件参数</param>
 		private void CheckboxDreampower_CheckedChanged(object sender, EventArgs e) {
 			CheckBox self = (CheckBox)sender;
 
@@ -200,8 +203,8 @@ namespace Nt_Cheater {
 		/// <summary>
 		/// 复选框_不消耗残机
 		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
+		/// <param name="sender">发送器</param>
+		/// <param name="e">事件参数</param>
 		private void CheckboxLife_CheckedChanged(object sender, EventArgs e) {
 			CheckBox self = (CheckBox)sender;
 
@@ -229,8 +232,8 @@ namespace Nt_Cheater {
 		/// <summary>
 		/// 复选框_不消耗BOOM
 		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
+		/// <param name="sender">发送器</param>
+		/// <param name="e">事件参数</param>
 		private void CheckboxBoom_CheckedChanged(object sender, EventArgs e) {
 			CheckBox self = (CheckBox)sender;
 
@@ -254,8 +257,8 @@ namespace Nt_Cheater {
 		/// <summary>
 		/// 复选框_修改画质
 		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
+		/// <param name="sender">发送器</param>
+		/// <param name="e">事件参数</param>
 		private void CheckboxSmooth_CheckedChanged(object sender, EventArgs e) {
 			CheckBox self = (CheckBox)sender;
 

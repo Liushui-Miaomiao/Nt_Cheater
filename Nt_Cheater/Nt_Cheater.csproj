@@ -67,6 +67,7 @@
     <Compile Include="FormMain.Designer.cs">
       <DependentUpon>FormMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="MyClass\MyAddress.cs" />
     <Compile Include="MyClass\MyGame.cs" />
     <Compile Include="MyClass\MyProcess.cs" />
